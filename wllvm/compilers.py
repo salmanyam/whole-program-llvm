@@ -140,9 +140,11 @@ def attachBitcodePathToObject(bcPath, outFileName):
     # Now write our bitcode section
     if sys.platform.startswith('darwin'):
         objcopyBin = f'{binUtilsTargetPrefix}-{"ld"}' if binUtilsTargetPrefix else 'ld'
+        objcopyBin = 'aarch64-linux-gnu-objcopy'
         objcopyCmd = [objcopyBin, '-r', '-keep_private_externs', outFileName, '-sectcreate', darwinSegmentName, darwinSectionName, f.name, '-o', outFileName]
     else:
         objcopyBin = f'{binUtilsTargetPrefix}-{"objcopy"}' if binUtilsTargetPrefix else 'objcopy'
+        objcopyBin = 'aarch64-linux-gnu-objcopy'
         objcopyCmd = [objcopyBin, '--add-section', f'{elfSectionName}={f.name}', outFileName]
     orc = 0
 
